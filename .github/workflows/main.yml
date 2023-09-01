@@ -1,0 +1,31 @@
+name: CI/CD 🚀
+
+on:
+  push:
+    branches:
+    - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+          
+      - name: Setupo Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-versions: 18
+        
+      - name: Install Dependencies
+        run: npm install
+        
+      - name: Build React App
+        run: npm run build
+        
+      - name: Deploy to AWS
+        run:
+          aws configure set aws_access_key_id <your Key>
+          aws configure set aws _secret_access_key <Your Key>
+          aws s3 sync build/ s3://<Your_bucket_name>
